@@ -3,12 +3,10 @@ import {
   Lock, 
   Globe, 
   Check, 
-  Copy, 
   X, 
   ShieldCheck, 
   CheckCircle2, 
   AlertCircle,
-  Sparkles,
   Link2
 } from 'lucide-react';
 import './PrivacyModal.css';
@@ -73,8 +71,8 @@ function PrivacyModal({ credential, onClose }) {
                             <ShieldCheck size={22} />
                         </div>
                         <div>
-                            <h2>Selective Privacy Share</h2>
-                            <span className="modal-subtitle">Generate cryptographic verification link</span>
+                            <h2>Share Credential</h2>
+                            <span className="modal-subtitle">Generate a shareable link</span>
                         </div>
                     </div>
                     <button className="close-button" onClick={onClose} aria-label="Close modal">
@@ -89,18 +87,18 @@ function PrivacyModal({ credential, onClose }) {
                             {isPrivate ? (
                                 <div className="mode-badge private">
                                     <Lock size={15} />
-                                    <span>Private Selective Mode</span>
+                                    <span>Private</span>
                                 </div>
                             ) : (
                                 <div className="mode-badge public">
                                     <Globe size={15} />
-                                    <span>Public Mode</span>
+                                    <span>Public</span>
                                 </div>
                             )}
                             <p className="mode-explain">
                                 {isPrivate
-                                    ? "Only selected attributes will be exposed to the verifier. Original PDF document will remain hidden."
-                                    : "All credential details and full document preview will be publicly accessible."}
+                                    ? "Only selected attributes will be visible. PDF will be hidden."
+                                    : "All details and document will be visible."}
                             </p>
                         </div>
 
@@ -172,7 +170,7 @@ function PrivacyModal({ credential, onClose }) {
                     {isPrivate && selectedFields.length === 0 && (
                         <div className="privacy-warning-box">
                             <AlertCircle size={18} />
-                            <span>No attributes selected. Verifiers will only see basic on-chain validity and token ID.</span>
+                            <span>No attributes selected. Only basic status will be visible.</span>
                         </div>
                     )}
 

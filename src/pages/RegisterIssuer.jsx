@@ -99,7 +99,7 @@ export default function RegisterIssuer() {
           </div>
           <h1 className="register-title">Register as Verified Issuer</h1>
           <p className="register-subtitle">
-            Apply to become an authorized academic authority on the EduTrust decentralized registry
+            Apply to become an authorized credential issuer
           </p>
         </div>
 
@@ -109,10 +109,9 @@ export default function RegisterIssuer() {
             <div className="success-badge-icon">
               <CheckCircle2 size={48} />
             </div>
-            <h2 className="success-headline">Application Submitted Successfully!</h2>
+            <h2 className="success-headline">Application Submitted!</h2>
             <p className="success-body">
-              Your institutional registration is currently pending registry governance approval.
-              Once confirmed, your wallet address will possess authority to mint verified credentials.
+              Your registration is pending approval. Once confirmed, you can issue credentials.
             </p>
 
             {hash && (
@@ -155,7 +154,7 @@ export default function RegisterIssuer() {
                   <span>
                     {isConnected
                       ? `Connected: ${address?.substring(0, 6)}...${address?.substring(address.length - 4)}`
-                      : "Connect your institution's authority wallet to continue"}
+                      : "Connect your wallet to continue"}
                   </span>
                 </div>
               </div>
@@ -169,7 +168,7 @@ export default function RegisterIssuer() {
               <form onSubmit={handleSubmit} className="institutional-form">
                 <div className="form-group">
                   <label htmlFor="instituteName" className="form-label">
-                    <span>Institute / University Legal Name</span>
+                    <span>Institution Name</span>
                     <span className="required-star">*</span>
                   </label>
                   <div className="input-with-icon">
@@ -179,14 +178,14 @@ export default function RegisterIssuer() {
                       id="instituteName"
                       value={instituteName}
                       onChange={(e) => setInstituteName(e.target.value)}
-                      placeholder="e.g. Stanford University, MIT, Indian Institute of Technology"
+                      placeholder="e.g. Stanford University, MIT"
                       required
                       disabled={isSubmitting || isConfirming}
                       className="text-input modern-input"
                     />
                   </div>
                   <span className="field-hint">
-                    This official name will be immutably embedded on all digital certificates issued by your keys.
+                    This name will appear on all credentials you issue.
                   </span>
                 </div>
 
@@ -214,7 +213,7 @@ export default function RegisterIssuer() {
                   {isSubmitting ? (
                     <>
                       <span className="btn-spinner"></span>
-                      <span>Submitting to Blockchain...</span>
+                      <span>Submitting...</span>
                     </>
                   ) : isConfirming ? (
                     <>
@@ -224,7 +223,7 @@ export default function RegisterIssuer() {
                   ) : (
                     <>
                       <ShieldCheck size={18} />
-                      <span>Submit Authority Application</span>
+                      <span>Submit Application</span>
                     </>
                   )}
                 </button>
@@ -233,9 +232,8 @@ export default function RegisterIssuer() {
                 <div className="institutional-notice">
                   <ShieldCheck size={18} className="notice-icon" />
                   <div className="notice-content">
-                    <strong>Registry Governance Note:</strong>
                     <p>
-                      Applications are cryptographically logged on the smart contract and verified by registry administrators to prevent spoofing. Verification typically completes within 24-48 hours.
+                      Applications are reviewed by administrators. Verification typically takes 24-48 hours.
                     </p>
                   </div>
                 </div>
@@ -243,7 +241,7 @@ export default function RegisterIssuer() {
             ) : (
               <div className="wallet-required-prompt">
                 <AlertCircle size={24} className="prompt-icon" />
-                <p>Please connect your web3 wallet above to establish your institutional identity.</p>
+                <p>Please connect your wallet to continue.</p>
               </div>
             )}
           </div>

@@ -10,14 +10,9 @@ import {
   ShieldCheck, 
   Award, 
   AlertTriangle, 
-  CheckCircle2, 
-  ExternalLink, 
-  Calendar, 
-  User, 
   Trash2, 
   Plus, 
   Layers, 
-  Sparkles,
   Wallet,
   ArrowRight,
   RefreshCw
@@ -184,10 +179,6 @@ function IssuerDashboard() {
                         <ShieldCheck size={28} />
                     </div>
                     <div>
-                        <div className="header-badge-pill">
-                            <Sparkles size={13} />
-                            <span>INSTITUTIONAL CONTROL</span>
-                        </div>
                         <h1 className="header-title">
                             Issuer Hub
                             {totalIssued > 0 && <span className="category-count-badge">{totalIssued} Issued</span>}
@@ -198,7 +189,7 @@ function IssuerDashboard() {
                 <div className="header-actions-group">
                     <Link to="/issue" className="btn-mint-shortcut">
                         <Plus size={16} />
-                        <span>Issue New Credential</span>
+                        <span>Issue Credential</span>
                     </Link>
                     <ConnectButton />
                 </div>
@@ -210,8 +201,8 @@ function IssuerDashboard() {
                         <div className="empty-prompt-icon">
                             <Wallet size={48} />
                         </div>
-                        <h3>Connect Authority Wallet</h3>
-                        <p>Connect your verified institutional wallet to monitor, inspect, and manage issued credentials on the blockchain.</p>
+                        <h3>Connect Wallet</h3>
+                        <p>Connect your wallet to manage issued credentials.</p>
                         <div className="prompt-connect-btn">
                             <ConnectButton />
                         </div>
@@ -219,7 +210,7 @@ function IssuerDashboard() {
                 ) : loading ? (
                     <div className="loading-state">
                         <div className="dashboard-spinner"></div>
-                        <p>Scanning smart contracts & IPFS for your issued credentials...</p>
+                        <p>Loading credentials...</p>
                     </div>
                 ) : error ? (
                     <div className="error-state">
@@ -235,11 +226,11 @@ function IssuerDashboard() {
                         <div className="empty-prompt-icon">
                             <Award size={48} />
                         </div>
-                        <h3>No Credentials Issued Yet</h3>
-                        <p>You haven't minted any credentials to students using this institutional wallet address.</p>
+                        <h3>No Credentials Issued</h3>
+                        <p>No credentials issued yet from this wallet address.</p>
                         <Link to="/issue" className="btn-primary mt-4">
                             <Plus size={16} />
-                            <span>Issue Your First Credential</span>
+                            <span>Issue Credential</span>
                         </Link>
                     </div>
                 ) : (
@@ -247,15 +238,15 @@ function IssuerDashboard() {
                         {/* Summary Bar */}
                         <div className="issuer-stats-strip">
                             <div className="stat-pill">
-                                <span className="stat-pill-label">Total Issued:</span>
+                                <span className="stat-pill-label">Total:</span>
                                 <span className="stat-pill-val">{totalIssued}</span>
                             </div>
                             <div className="stat-pill">
-                                <span className="stat-pill-label">Active Schema Categories:</span>
+                                <span className="stat-pill-label">Categories:</span>
                                 <span className="stat-pill-val">{Object.keys(issuedCredentials).length}</span>
                             </div>
                             <div className="stat-pill">
-                                <span className="stat-pill-label">Connected Authority:</span>
+                                <span className="stat-pill-label">Wallet:</span>
                                 <span className="stat-pill-mono">{formatAddress(address)}</span>
                             </div>
                         </div>
@@ -289,11 +280,11 @@ function IssuerDashboard() {
                                                     <span className="info-value credential-id">#{cred.id}</span>
                                                 </div>
                                                 <div className="info-row">
-                                                    <span className="info-label">Date Minted</span>
+                                                    <span className="info-label">Issued</span>
                                                     <span className="info-value">{formatDate(cred.timestamp)}</span>
                                                 </div>
                                                 <div className="info-row">
-                                                    <span className="info-label">Student Recipient</span>
+                                                    <span className="info-label">Student</span>
                                                     <span className="info-value address-value" title={cred.student}>
                                                         {formatAddress(cred.student)}
                                                     </span>

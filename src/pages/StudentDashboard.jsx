@@ -10,12 +10,8 @@ import {
     GraduationCap,
     Share2,
     Calendar,
-    ShieldCheck,
     FileText,
-    FileCheck2,
-    ExternalLink,
     Wallet,
-    Sparkles,
     Database,
     Tag
 } from 'lucide-react';
@@ -140,10 +136,6 @@ function StudentDashboard() {
                         <GraduationCap size={28} />
                     </div>
                     <div>
-                        <div className="header-badge-pill">
-                            <Sparkles size={13} />
-                            <span>STUDENT PORTFOLIO</span>
-                        </div>
                         <h1 className="header-title">My Credentials</h1>
                     </div>
                 </div>
@@ -158,8 +150,8 @@ function StudentDashboard() {
                         <div className="empty-prompt-icon">
                             <Wallet size={48} />
                         </div>
-                        <h3>Connect Your Web3 Wallet</h3>
-                        <p>Connect the wallet address where your university or institution issued your credentials to inspect and share them.</p>
+                        <h3>Connect Wallet</h3>
+                        <p>Connect your wallet to view your credentials.</p>
                         <div className="prompt-connect-btn">
                             <ConnectButton />
                         </div>
@@ -167,7 +159,7 @@ function StudentDashboard() {
                 ) : loading ? (
                     <div className="loading">
                         <div className="dashboard-spinner"></div>
-                        <p>Querying Ethereum & IPFS for your credentials...</p>
+                        <p>Loading credentials...</p>
                     </div>
                 ) : error ? (
                     <div className="error">
@@ -180,15 +172,15 @@ function StudentDashboard() {
                             <FileText size={48} />
                         </div>
                         <h3>No Credentials Found</h3>
-                        <p>Your connected wallet does not have any active credentials issued yet.</p>
-                        <span className="empty-hint">Make sure you are connected with the recipient student address.</span>
+                        <p>No credentials found for this wallet address.</p>
+                        <span className="empty-hint">Make sure you are connected with the correct address.</span>
                     </div>
                 ) : (
                     <div className="student-credentials-container">
                         <div className="credentials-toolbar">
                             <div className="toolbar-count">
                                 <span className="active-dot"></span>
-                                <span><strong>{myCredentials.length}</strong> Verified {myCredentials.length === 1 ? 'Credential' : 'Credentials'}</span>
+                                <span><strong>{myCredentials.length}</strong> {myCredentials.length === 1 ? 'Credential' : 'Credentials'}</span>
                             </div>
                         </div>
 
@@ -246,7 +238,7 @@ function CredentialCard({ credential, formatDate }) {
                         {loadingPdf ? (
                             <div className="pdf-loading">
                                 <span className="pdf-spinner"></span>
-                                <span>Decrypting & Loading PDF...</span>
+                                <span>Loading PDF...</span>
                             </div>
                         ) : pdfUrl ? (
                             <iframe
@@ -260,7 +252,6 @@ function CredentialCard({ credential, formatDate }) {
                                 <span>Preview unavailable</span>
                             </div>
                         )}
-                        <div className="preview-badge">Document Preview</div>
                     </div>
                 )}
 
@@ -269,7 +260,7 @@ function CredentialCard({ credential, formatDate }) {
                         <span className="token-id-pill">Token #{id}</span>
                         <span className="valid-pill">
                             <span className="pill-dot"></span>
-                            <span>On-Chain Verified</span>
+                            <span>Valid</span>
                         </span>
                     </div>
 
@@ -314,7 +305,7 @@ function CredentialCard({ credential, formatDate }) {
                         onClick={() => setShowModal(true)}
                     >
                         <Share2 size={16} />
-                        <span>Share with Selective Privacy</span>
+                        <span>Share</span>
                     </button>
                 </div>
             </div>

@@ -44,9 +44,9 @@ function App() {
               {/* Brand Logo */}
               <Link to="/" className="brand-logo" onClick={closeMenu}>
                 <div className="logo-symbol">
-                  <ShieldCheck size={22} />
+                  <ShieldCheck size={20} />
                 </div>
-                <span className="logo-primary">Student Credentials</span>
+                <span className="logo-primary">Credora</span>
               </Link>
 
               {/* Desktop Nav Links */}

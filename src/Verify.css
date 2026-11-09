@@ -256,25 +256,26 @@
   font-size: 0.85rem;
 }
 
-/* Credential Result Card */
+/* Credential Result Card - Modern Sculpted Frame */
 .credential-result-card {
-  background: var(--bg-card);
+  position: relative;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(26, 32, 46, 0.6) 0%, rgba(13, 17, 26, 0.85) 100%);
   backdrop-filter: blur(24px);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-glass);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .credential-result-card.valid {
   border-color: rgba(16, 185, 129, 0.35);
-  box-shadow: var(--shadow-lg), 0 0 35px rgba(16, 185, 129, 0.12);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.45), 0 0 30px rgba(16, 185, 129, 0.12);
 }
 
 .credential-result-card.revoked {
   border-color: rgba(244, 63, 94, 0.4);
-  box-shadow: var(--shadow-lg), 0 0 35px rgba(244, 63, 94, 0.15);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.45), 0 0 30px rgba(244, 63, 94, 0.15);
 }
 
 /* Banner */

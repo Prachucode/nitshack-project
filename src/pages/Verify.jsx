@@ -282,13 +282,9 @@ const Verify = () => {
       <div className="verify-container">
         {/* Header */}
         <div className="verify-header text-center">
-          <div className="section-badge-pill">
-            <ShieldCheck size={14} />
-            <span>CRYPTOGRAPHIC PROOF EXPLORER</span>
-          </div>
-          <h1 className="verify-title">Verify Credential Authenticity</h1>
+          <h1 className="verify-title">Verify Credential</h1>
           <p className="verify-subtitle">
-            Validate on-chain integrity, issuer authorization status, and IPFS records in real time
+            Check credential validity on the blockchain
           </p>
         </div>
 
@@ -300,7 +296,7 @@ const Verify = () => {
                 <Search size={18} className="search-box-icon" />
                 <input
                   type="text"
-                  placeholder="Paste Credential Token ID, UUID link, or Privacy Token..."
+                  placeholder="Enter credential ID or verification link"
                   value={searchId}
                   onChange={(e) => setSearchId(e.target.value)}
                   className="search-input"
@@ -319,20 +315,12 @@ const Verify = () => {
                 ) : (
                   <>
                     <ShieldCheck size={16} />
-                    <span>Verify Credential</span>
+                    <span>Verify</span>
                   </>
                 )}
               </button>
             </div>
           </form>
-
-          {/* Quick Preset Hints */}
-          <div className="search-presets-bar">
-            <span className="presets-label">Supported inputs:</span>
-            <span className="preset-pill">On-Chain Token ID (e.g. 6)</span>
-            <span className="preset-pill">Decentralized UUID</span>
-            <span className="preset-pill">ZK Privacy Token (Base64)</span>
-          </div>
         </div>
 
         {/* Error Message */}
@@ -344,14 +332,6 @@ const Verify = () => {
             <div className="error-content">
               <h3>Credential Not Found</h3>
               <p>{fetchError}</p>
-              <div className="error-suggestions">
-                <strong>Troubleshooting tips:</strong>
-                <ul>
-                  <li>Confirm the token ID or UUID was typed correctly.</li>
-                  <li>Ensure the credential was confirmed on the blockchain network.</li>
-                  <li>Check if the shared link contains a valid privacy token payload.</li>
-                </ul>
-              </div>
             </div>
           </div>
         )}
@@ -360,8 +340,8 @@ const Verify = () => {
         {loading && (
           <div className="loading-card">
             <div className="loading-spinner"></div>
-            <h3>Querying Smart Contract Registry</h3>
-            <p>Fetching on-chain status, issuer authorization, and IPFS metadata...</p>
+            <h3>Verifying...</h3>
+            <p>Fetching credential data...</p>
           </div>
         )}
 
@@ -379,17 +359,14 @@ const Verify = () => {
                   {credentialData.revoked ? (
                     <div className="status-pill status-revoked">
                       <ShieldAlert size={18} />
-                      <span>REVOKED ON-CHAIN</span>
+                      <span>REVOKED</span>
                     </div>
                   ) : (
                     <div className="status-pill status-valid">
                       <CheckCircle2 size={18} />
-                      <span>VERIFIED & CRYPTOGRAPHICALLY VALID</span>
+                      <span>VERIFIED</span>
                     </div>
                   )}
-                </div>
-                <div className="status-network-pill">
-                  Ethereum Sepolia / EVM Verified
                 </div>
               </div>
 
@@ -399,19 +376,14 @@ const Verify = () => {
                   <Award size={32} />
                 </div>
                 <div className="credential-title-section">
-                  <span className="credential-type-tag">
-                    {metadata
-                      ? metadata.certificateType?.replace(/_/g, " ") || "Official Credential"
-                      : "Official Credential"}
-                  </span>
                   <h2 className="credential-main-title">
                     {metadata?.name || `Credential #${credentialData.id.toString()}`}
                   </h2>
                   <div className="credential-id-row">
-                    <span className="token-id-badge">Token ID: #{credentialData.id.toString()}</span>
+                    <span className="token-id-badge">ID: #{credentialData.id.toString()}</span>
                     {credentialData.issuer && (
                       <span className="issuer-addr-badge" title={credentialData.issuer}>
-                        Authority: {formatAddress(credentialData.issuer)}
+                        Issuer: {formatAddress(credentialData.issuer)}
                       </span>
                     )}
                   </div>
@@ -425,7 +397,7 @@ const Verify = () => {
                   <div className="detail-item">
                     <div className="detail-label">
                       <Layers size={14} />
-                      <span>Certificate Schema</span>
+                      <span>Type</span>
                     </div>
                     <div className="detail-value">
                       {metadata.certificateType?.replace(/_/g, " ") || "Standard"}
@@ -437,7 +409,7 @@ const Verify = () => {
                 <div className="detail-item">
                   <div className="detail-label">
                     <Calendar size={14} />
-                    <span>Date of Issuance</span>
+                    <span>Issued</span>
                   </div>
                   <div className="detail-value">
                     {formatDate(credentialData.issueDate)}
@@ -448,22 +420,22 @@ const Verify = () => {
                 <div className="detail-item full-width">
                   <div className="detail-label">
                     <Building2 size={14} />
-                    <span>Issuing Authority Verification</span>
+                    <span>Issuer Status</span>
                   </div>
                   <div className="detail-value">
                     {isIssuerCheckLoading ? (
                       <span className="issuer-loading">
-                        <span className="spinner-small"></span> Verifying against Institutional Registry...
+                        <span className="spinner-small"></span> Checking...
                       </span>
                     ) : isTrustedIssuer ? (
                       <span className="issuer-trusted">
                         <CheckCircle2 size={16} />
-                        <span>Registered & Authorized Academic Authority</span>
+                        <span>Authorized Issuer</span>
                       </span>
                     ) : (
                       <span className="issuer-unknown">
                         <AlertCircle size={16} />
-                        <span>Independent / Unregistered Issuer Address</span>
+                        <span>Unregistered Issuer</span>
                       </span>
                     )}
                   </div>
@@ -474,11 +446,11 @@ const Verify = () => {
               {metadata && getFilteredMetadata()?.attributes && getFilteredMetadata().attributes.length > 0 && (
                 <div className="attributes-section">
                   <div className="attributes-header-row">
-                    <h3 className="section-title">Verified Credential Attributes</h3>
+                    <h3 className="section-title">Attributes</h3>
                     {privacyRules && (
                       <span className="selective-badge">
                         <Lock size={12} />
-                        <span>Filtered by Student</span>
+                        <span>Filtered</span>
                       </span>
                     )}
                   </div>
@@ -503,7 +475,7 @@ const Verify = () => {
                     className="action-btn primary"
                   >
                     <FileText size={16} />
-                    <span>Inspect Original Document (PDF)</span>
+                    <span>View Document (PDF)</span>
                     <ExternalLink size={14} />
                   </a>
                 )}
@@ -513,7 +485,7 @@ const Verify = () => {
                     <Lock size={18} className="lock-icon" />
                     <div>
                       <strong>Document Viewing Restricted</strong>
-                      <p>The student shared this credential in Selective Privacy Mode. Full document binary is hidden.</p>
+                      <p>Document access restricted by student privacy settings.</p>
                     </div>
                   </div>
                 )}
@@ -524,8 +496,8 @@ const Verify = () => {
                 <div className="privacy-notice-banner">
                   <Lock size={18} className="privacy-icon" />
                   <div>
-                    <strong>Selective Privacy Mode Active</strong>
-                    <p>Only attributes explicitly approved by the student are disclosed. All omitted traits remain cryptographically private.</p>
+                    <strong>Privacy Mode Active</strong>
+                    <p>Only selected attributes are shown.</p>
                   </div>
                 </div>
               )}
@@ -536,7 +508,7 @@ const Verify = () => {
                   <details className="metadata-details">
                     <summary className="metadata-summary">
                       <Database size={15} />
-                      <span>View Raw IPFS Metadata (JSON-LD)</span>
+                      <span>View Raw Metadata</span>
                     </summary>
                     <pre className="metadata-json">
                       {JSON.stringify(getFilteredMetadata(), null, 2)}
@@ -553,9 +525,9 @@ const Verify = () => {
             <div className="empty-icon-wrap">
               <Search size={36} />
             </div>
-            <h3>Universal Verification Engine</h3>
+            <h3>Verify a Credential</h3>
             <p>
-              Enter any Credential Token ID, UUID, or paste an official share link to check its cryptographic validity on the blockchain ledger.
+              Enter a credential ID or paste a verification link to check its validity.
             </p>
             <div className="example-text">
               <span>Quick Test: Try credential ID</span>

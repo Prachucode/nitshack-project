@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { 
-  Layers, 
   Plus, 
   Trash2, 
   FileCode2, 
-  Sparkles, 
   Check, 
   X, 
-  AlertCircle,
-  Tag,
   Hash,
   Calendar,
   Type as TypeIcon
@@ -94,7 +90,7 @@ export default function CertificateTypes() {
     };
 
     const handleDeleteType = (id) => {
-        if (window.confirm("Are you sure you want to delete this certificate schema? Existing credentials minted under this schema will remain valid on-chain.")) {
+        if (window.confirm("Delete this template? Existing credentials won't be affected.")) {
             const updatedTypes = types.filter(t => t.id !== id);
             setTypes(updatedTypes);
             localStorage.setItem('certTemplates', JSON.stringify(updatedTypes));
@@ -114,13 +110,9 @@ export default function CertificateTypes() {
             <div className="form-wrapper max-width-1100">
                 {/* Header */}
                 <div className="form-header text-center">
-                    <div className="section-badge-pill">
-                        <Layers size={14} />
-                        <span>METADATA SCHEMAS</span>
-                    </div>
                     <h1 className="form-title">Certificate Schemas</h1>
                     <p className="form-subtitle">
-                        Configure extensible credential definitions and customizable attribute fields for NFT metadata
+                        Manage certificate templates and their fields
                     </p>
                 </div>
 
@@ -130,14 +122,14 @@ export default function CertificateTypes() {
                             <div className="schemas-toolbar">
                                 <div className="schemas-counter">
                                     <span className="counter-dot"></span>
-                                    <span><strong>{types.length}</strong> Configured Schemas</span>
+                                    <span><strong>{types.length}</strong> Templates</span>
                                 </div>
                                 <button 
                                     onClick={() => setShowAddForm(true)}
                                     className="add-type-button"
                                 >
                                     <Plus size={18} />
-                                    <span>Create New Schema</span>
+                                    <span>New Template</span>
                                 </button>
                             </div>
 
@@ -167,7 +159,7 @@ export default function CertificateTypes() {
                                         </div>
 
                                         <div className="type-fields">
-                                            <p className="fields-label">Attributes Schema:</p>
+                                            <p className="fields-label">Fields:</p>
                                             <div className="fields-badge-list">
                                                 {type.fields.map((field, idx) => (
                                                     <div key={idx} className="field-tag-pill">
@@ -186,8 +178,8 @@ export default function CertificateTypes() {
                         <div className="add-type-form-container">
                             <div className="form-panel-header">
                                 <div>
-                                    <h3 className="panel-title">Define New Certificate Schema</h3>
-                                    <p className="panel-subtitle">Assign custom attributes that will be prompted when minting this credential</p>
+                                    <h3 className="panel-title">New Template</h3>
+                                    <p className="panel-subtitle">Define fields for this credential type</p>
                                 </div>
                                 <button 
                                     onClick={() => setShowAddForm(false)} 
@@ -200,7 +192,7 @@ export default function CertificateTypes() {
 
                             <div className="form-group">
                                 <label className="form-label">
-                                    <span>Schema / Credential Type Name</span>
+                                    <span>Template Name</span>
                                     <span className="required-star">*</span>
                                 </label>
                                 <input 
@@ -215,7 +207,7 @@ export default function CertificateTypes() {
 
                             <div className="fields-section">
                                 <div className="fields-section-header">
-                                    <label className="form-label">Custom Schema Attributes</label>
+                                    <label className="form-label">Fields</label>
                                     <span className="fields-hint">Define fields like GPA, Major, Hours, or Expiry</span>
                                 </div>
 
@@ -237,9 +229,9 @@ export default function CertificateTypes() {
                                                     onChange={(e) => handleFieldChange(index, 'type', e.target.value)}
                                                     className="field-select"
                                                 >
-                                                    <option value="text">Text String</option>
-                                                    <option value="number">Numeric</option>
-                                                    <option value="date">Date (ISO)</option>
+                                                    <option value="text">Text</option>
+                                                    <option value="number">Number</option>
+                                                    <option value="date">Date</option>
                                                 </select>
                                             </div>
                                             <button 
@@ -256,7 +248,7 @@ export default function CertificateTypes() {
 
                                 <button onClick={handleAddField} className="add-field-btn">
                                     <Plus size={16} />
-                                    <span>Add Another Attribute</span>
+                                    <span>Add Field</span>
                                 </button>
                             </div>
 
@@ -272,7 +264,7 @@ export default function CertificateTypes() {
                                     className="save-button"
                                 >
                                     <Check size={16} />
-                                    <span>Save Schema Template</span>
+                                    <span>Save Template</span>
                                 </button>
                             </div>
                         </div>

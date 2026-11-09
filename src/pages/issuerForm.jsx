@@ -529,8 +529,8 @@ export default function IssuerForm() {
             <Wallet size={18} className={isConnected ? "text-emerald" : "text-amber"} />
             <span>
               {isConnected 
-                ? "Authority Wallet Active" 
-                : "Connect your authorized issuer wallet to proceed"}
+                ? "Wallet Connected" 
+                : "Connect wallet to proceed"}
             </span>
           </div>
           <ConnectButton />
@@ -563,13 +563,13 @@ export default function IssuerForm() {
                 <div className="file-upload-meta">
                   <span className="file-title">
                     {isAiProcessing
-                      ? "Gemini AI is analyzing document..."
+                      ? "AI is reading document..."
                       : file
                       ? file.name
                       : "Click to browse or drop PDF document here"}
                   </span>
                   <span className="file-subtitle">
-                    {file ? `${(file.size / 1024).toFixed(1)} KB • Ready for processing` : "Supported format: PDF up to 10MB"}
+                    {file ? `${(file.size / 1024).toFixed(1)} KB` : "Supported format: PDF up to 10MB"}
                   </span>
                 </div>
               </label>
@@ -577,7 +577,7 @@ export default function IssuerForm() {
             {isAiProcessing && (
               <div className="ai-loading">
                 <div className="spinner"></div>
-                <span>Gemini AI is extracting attributes, names, GPA, and timestamps...</span>
+                <span>AI is extracting data...</span>
               </div>
             )}
             {aiError && (
@@ -592,7 +592,7 @@ export default function IssuerForm() {
           <div className="form-group">
             <label className="form-label">
               <Layers size={16} />
-              <span>Target Certificate Schema</span>
+              <span>Certificate Type</span>
             </label>
             {certificateTypes.length > 0 ? (
               <select
@@ -617,8 +617,8 @@ export default function IssuerForm() {
           {selectedType && selectedType.fields.length > 0 && (
             <div className="attributes-section">
               <div className="attributes-section-header">
-                <h3 className="section-title">Extracted Schema Attributes</h3>
-                <span className="attributes-ai-pill">Auto-populated by AI</span>
+                <h3 className="section-title">Attributes</h3>
+                <span className="attributes-ai-pill">Auto-filled</span>
               </div>
               <div className="attributes-input-grid">
                 {selectedType.fields.map((field, index) => (
@@ -647,7 +647,7 @@ export default function IssuerForm() {
             disabled={!file || !selectedType || certificateTypes.length === 0}
           >
             <Upload size={18} />
-            <span>Pin Document & Metadata to IPFS</span>
+            <span>Upload to IPFS</span>
           </button>
 
           {/* Status Message */}
@@ -665,12 +665,12 @@ export default function IssuerForm() {
                 <CheckCircle2 size={24} />
               </div>
               <div className="success-details">
-                <h3>IPFS Storage Confirmed</h3>
+                <h3>Upload Complete</h3>
                 <p className="hash-note">
-                  Your PDF file and standardized metadata have been permanently pinned to IPFS.
+                  Document and metadata uploaded to IPFS.
                 </p>
                 <div className="hash-display">
-                  <span className="hash-label">Metadata CID Hash:</span>
+                  <span className="hash-label">IPFS Hash:</span>
                   <div className="hash-code-row">
                     <code className="hash-value">{finalHash}</code>
                     <button 
@@ -692,13 +692,13 @@ export default function IssuerForm() {
             <div className="mint-section">
               <div className="mint-section-header">
                 <h3 className="mint-section-title">Mint to Blockchain</h3>
-                <p className="mint-section-desc">Record this credential on the blockchain registry.</p>
+                <p className="mint-section-desc">Issue this credential on the blockchain.</p>
               </div>
 
               {/* Student Address Input */}
               <div className="form-group">
                 <label className="form-label">
-                  <span>Student Web3 Address</span>
+                  <span>Student Address</span>
                   <span className="required-star">*</span>
                 </label>
                 <input
@@ -732,17 +732,17 @@ export default function IssuerForm() {
                 {isMintPending ? (
                   <>
                     <span className="btn-spinner"></span>
-                    <span>Waiting for Signature in Wallet...</span>
+                    <span>Waiting for Wallet...</span>
                   </>
                 ) : isConfirming ? (
                   <>
                     <span className="btn-spinner"></span>
-                    <span>Confirming On-Chain Transaction...</span>
+                    <span>Confirming...</span>
                   </>
                 ) : (
                   <>
                     <Award size={18} />
-                    <span>Mint Credential to Blockchain</span>
+                    <span>Mint Credential</span>
                   </>
                 )}
               </button>
@@ -751,7 +751,7 @@ export default function IssuerForm() {
               {!isConnected && (
                 <div className="warning-callout">
                   <AlertCircle size={16} />
-                  <span>Please connect your authority wallet to mint credentials</span>
+                  <span>Connect wallet to mint</span>
                 </div>
               )}
 
@@ -777,7 +777,7 @@ export default function IssuerForm() {
                       rel="noopener noreferrer"
                       className="explorer-link"
                     >
-                      <span>View on Sepolia Etherscan</span>
+                      <span>View on Etherscan</span>
                       <ExternalLink size={14} />
                     </a>
                   </div>
@@ -793,8 +793,8 @@ export default function IssuerForm() {
                       <CheckCircle2 size={32} />
                     </div>
                     <div>
-                      <h4>Credential Minted Successfully!</h4>
-                      <p>The academic credential is now permanently secured on Ethereum Sepolia.</p>
+                      <h4>Credential Minted</h4>
+                      <p>Credential minted successfully.</p>
                     </div>
                   </div>
 
@@ -802,8 +802,7 @@ export default function IssuerForm() {
                   {credentialUUID && (
                     <div className="uuid-share-container">
                       <div className="share-link-header">
-                        <span className="share-link-title">🔗 Official Verification Link:</span>
-                        <span className="share-link-badge">1-Click Verifiable</span>
+                        <span className="share-link-title">Verification Link:</span>
                       </div>
                       
                       <div className="share-link-box">
@@ -838,7 +837,7 @@ export default function IssuerForm() {
                       <div className="api-endpoint-card">
                         <div className="api-card-header">
                           <Terminal size={14} />
-                          <span>Developer REST Endpoint:</span>
+                          <span>API Endpoint:</span>
                         </div>
                         <code className="api-code-line">
                           {`GET http://localhost:5000/api/credentials/${credentialUUID}`}
@@ -846,7 +845,7 @@ export default function IssuerForm() {
                       </div>
 
                       <p className="share-guidance-note">
-                        💡 Share this link with employers, background check agencies, or add it to LinkedIn. It validates in real-time against smart contracts and IPFS.
+                        Share this link to allow verification of this credential.
                       </p>
                     </div>
                   )}

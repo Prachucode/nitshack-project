@@ -13,24 +13,24 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero-section">
         <h1 className="hero-title">
-          Student Credential Platform
+          Credora
         </h1>
 
         <p className="hero-subtitle">
-          Issue, verify, and manage tamper-proof academic credentials on the blockchain
+          Decentralized credentials platform. Issue, verify, and manage on-chain records.
         </p>
 
         {/* Primary CTAs */}
         <div className="hero-cta-group">
           <Link to="/issue" className="btn-primary">
             <Award size={18} />
-            <span>Issue Credential</span>
+            <span>Issue</span>
             <ArrowRight size={16} />
           </Link>
 
           <Link to="/verify" className="btn-secondary">
             <FileCheck2 size={18} />
-            <span>Verify Credential</span>
+            <span>Verify</span>
           </Link>
 
           <Link to="/dashboard" className="btn-secondary">
@@ -45,26 +45,26 @@ export default function Home() {
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon-box cyan">
-              <Award size={24} />
+              <Award size={22} />
             </div>
-            <h3>Issue Credentials</h3>
-            <p>Upload student certificates, auto-extract details with AI, and mint them as permanent blockchain NFTs.</p>
+            <h3>Issuance</h3>
+            <p>Upload documents, extract fields, and mint credentials on-chain.</p>
           </div>
 
           <div className="feature-card">
             <div className="feature-icon-box emerald">
-              <ShieldCheck size={24} />
+              <ShieldCheck size={22} />
             </div>
-            <h3>Secure & Immutable</h3>
-            <p>Documents and metadata are pinned to IPFS and secured on smart contracts for tamper-proof records.</p>
+            <h3>Verification</h3>
+            <p>Instant decentralized validation against smart contracts and IPFS.</p>
           </div>
 
           <div className="feature-card">
             <div className="feature-icon-box purple">
-              <FileCheck2 size={24} />
+              <FileCheck2 size={22} />
             </div>
-            <h3>Instant Verification</h3>
-            <p>Verify any credential in seconds via token ID, UUID, or selective privacy share links.</p>
+            <h3>Privacy Control</h3>
+            <p>Share selective attributes securely with custom verification links.</p>
           </div>
         </div>
       </section>

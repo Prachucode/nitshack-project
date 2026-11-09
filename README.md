@@ -1,26 +1,31 @@
-# Student Credentials Platform
+# Credora
 
-A blockchain-based credential issuance and verification platform built with React, Vite, Wagmi, and Polygon.
+A decentralized credential issuance, verification, and privacy-preserving management platform built with React, Vite, Wagmi, RainbowKit, Ethereum/Sepolia, and IPFS.
+
+## Overview
+
+**Credora** provides a streamlined, transparent ecosystem for issuing verifiable credentials on-chain, inspecting credential integrity, and selectively sharing verifiable attributes without compromising full document privacy.
 
 ## Features
 
-- 🎓 **Dynamic Certificate Types**: Create and manage custom certificate templates with flexible fields
-- 🤖 **AI-Powered Form Filling**: Automatically extract data from PDF certificates using Google Gemini AI
-- 📄 **IPFS Storage**: Decentralized storage of credentials and metadata via Pinata
-- ⛓️ **Blockchain Minting**: Issue credentials as NFTs on Polygon Amoy testnet
-- 🔐 **Wallet Integration**: Connect with MetaMask and other wallets via RainbowKit
-- ✨ **Modern UI**: Beautiful gradient design with responsive layout
+- 🎓 **Template Management**: Define customizable certificate schemas with structured data types (text, number, date).
+- 🤖 **AI-Assisted Ingestion**: Automatically parse uploaded PDF documents using Google Gemini AI to pre-fill attribute fields.
+- 📦 **Decentralized Storage**: Secure, permanent document and metadata pinning to IPFS via Pinata.
+- ⛓️ **Smart Contract Registry**: Mint verifiable credentials directly to Ethereum Sepolia.
+- 🔍 **Instant Verification**: Check cryptographic validity and issuer authorization status via Token ID, UUID, or privacy tokens.
+- 🔒 **Selective Privacy Sharing**: Generate privacy-preserving verification links allowing students to disclose only chosen attributes while keeping the original document private.
+- 🎨 **Minimal & Modern UI**: Floating capsule dock navbar, sculpted radial-glow cards, and zero footer clutter.
 
 ## Prerequisites
 
-- Node.js 16+ and npm
-- MetaMask or another Web3 wallet
-- Pinata account for IPFS storage
-- Google Gemini API key for AI parsing
+- Node.js 18+ and pnpm / npm
+- MetaMask or any Web3 wallet
+- Pinata account with API access
+- Google Gemini API key
 
 ## Environment Setup
 
-Create a `.env` file in the root directory with the following variables:
+Create a `.env` file in the root directory:
 
 ```env
 # Pinata IPFS Configuration
@@ -28,140 +33,62 @@ VITE_PINATA_JWT=your_pinata_jwt_token_here
 
 # Google Gemini AI Configuration (for PDF parsing)
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
+
+# Smart Contract Address
+VITE_CONTRACT_ADDRESS=0xC8e4689704E74e62C59D7Fc20C74f7D0803157e9
 ```
 
-### Getting API Keys
-
-1. **Pinata JWT**: 
-   - Sign up at [Pinata Cloud](https://app.pinata.cloud/)
-   - Go to API Keys section and create a new JWT token
-   - Make sure it has pinning permissions
-
-2. **Gemini API Key**:
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
-   - Copy the key to your `.env` file
-
-## Installation
+## Installation & Running
 
 ```bash
-npm install
-```
+# Install dependencies
+pnpm install
 
-## Development
-
-```bash
+# Start development server
 npm run dev
-```
 
-The app will be available at `http://localhost:5173`
+# Build for production
+npx vite build
+```
 
 ## How It Works
 
-### 1. Create Certificate Types
-- Navigate to "Manage Types" to create custom certificate templates
-- Define fields with different types (text, number, date)
-- Pre-configured with "University Degree" template
-
-### 2. Issue Credentials
-- Upload a PDF certificate
-- **AI automatically extracts** field values from the PDF (review and edit as needed)
-- Select certificate type and fill in any missing details
-- Upload to IPFS to get metadata hash
-- Connect wallet and mint as NFT on blockchain
-
-### 3. AI-Powered Parsing
-When you upload a PDF:
-1. **Text Extraction**: PDF.js extracts all text from the document
-2. **AI Analysis**: Google Gemini AI analyzes the text and identifies field values
-3. **Auto-Fill**: Form fields are automatically populated
-4. **Manual Override**: You can edit any field before submitting
-
-The AI acts as a **Copilot**, not an Autopilot - all fields remain editable!
+1. **Issuer Registration**: Academic or institutional entities submit an on-chain registration request.
+2. **Template Creation**: Define fields (e.g., Major, GPA, Graduation Date) under "Manage Types".
+3. **Document Ingestion & AI Extraction**: Upload a credential PDF; Gemini AI reads and auto-populates template fields.
+4. **IPFS Pinning & Minting**: Files are pinned to IPFS, and the credential metadata is minted on Ethereum Sepolia.
+5. **Student & Issuer Hubs**: Students view and manage their credentials, while issuers monitor total issuances and manage revocations.
+6. **Privacy Sharing & Public Verification**: Students can share either full verification or selective privacy links where only approved attributes are visible.
 
 ## Technology Stack
 
-- **Frontend**: React 18 + Vite
-- **Blockchain**: Wagmi v3 + Viem + RainbowKit
-- **Network**: Polygon Amoy Testnet
-- **Storage**: IPFS via Pinata
-- **AI**: Google Gemini 1.5 Flash
-- **PDF Processing**: pdf.js-dist
-- **Smart Contract**: ERC721-based CredentialRegistry
-
-## Smart Contract
-
-- **Address**: `0x710ea2b142bF87FD6330d0880F93d23C496d4E48`
-- **Network**: Polygon Amoy (Testnet)
-- **Function**: `issueCredential(address student, string ipfsHash)`
+- **Frontend**: React 18, Vite, Lucide Icons
+- **Web3**: Wagmi, Viem, RainbowKit
+- **Network**: Ethereum Sepolia Testnet
+- **Storage**: IPFS (Pinata)
+- **AI Engine**: Google Gemini 1.5 Flash
+- **Document Processing**: PDF.js (`pdf.js-dist`)
 
 ## Project Structure
 
 ```
 src/
-├── components/          # Reusable React components
-├── pages/              # Page components
-│   ├── Home.jsx        # Landing page
-│   ├── issuerForm.jsx  # Credential issuance form
-│   └── CertificateTypes.jsx  # Certificate type management
-├── utils/              # Utility functions
-│   ├── pinata.js       # IPFS upload functions
-│   ├── pdfToText.js    # PDF text extraction
-│   ├── aiParser.js     # AI parsing logic
-│   └── abi.json        # Smart contract ABI
-├── config/             # Configuration files
-│   ├── wagmi.js        # Wagmi blockchain config
-│   └── contract.js     # Contract address and ABI
-└── App.jsx             # Main app with routing
+├── components/
+│   └── PrivacyModal.jsx      # Selective privacy link generator
+├── pages/
+│   ├── Home.jsx              # Credora landing page
+│   ├── issuerForm.jsx        # Issuance and minting flow
+│   ├── Verify.jsx            # Credential inspection and verification
+│   ├── StudentDashboard.jsx  # Student credential management & viewing
+│   ├── IssuerDashboard.jsx   # Issuer dashboard with metrics & revoke control
+│   ├── RegisterIssuer.jsx    # Institutional registration interface
+│   └── CertificateTypes.jsx  # Schema & template manager
+├── services/                 # Backend API services
+├── utils/                    # ABI, IPFS helpers, and AI parser
+├── config/                   # Wagmi provider setup
+├── App.jsx                   # Main application router and floating dock navbar
+└── App.css                   # Global theme and UI styling
 ```
-
-## Key Features Explained
-
-### Dynamic Certificate Templates
-- Stored in browser localStorage (can be upgraded to backend database)
-- Supports text, number, and date field types
-- Extensible for future field types
-
-### NFT Metadata Standard
-The platform follows OpenSea metadata standards:
-```json
-{
-  "name": "University Degree - Student Credential",
-  "description": "A verifiable credential...",
-  "image": "ipfs://Qm...",
-  "attributes": [
-    { "trait_type": "Course", "value": "Computer Science" },
-    { "trait_type": "GPA", "value": "3.8", "display_type": "number" }
-  ]
-}
-```
-
-## Troubleshooting
-
-### AI Parsing Not Working
-- Verify `VITE_GEMINI_API_KEY` is set correctly
-- Check console for detailed error messages
-- Ensure PDF contains readable text (not scanned images)
-- Fields remain editable - you can always fill manually
-
-### Wallet Connection Issues
-- Make sure MetaMask is installed
-- Switch to Polygon Amoy network in MetaMask
-- Clear browser cache and reload
-
-### IPFS Upload Failing
-- Verify `VITE_PINATA_JWT` has correct permissions
-- Check Pinata dashboard for API limits
-- Ensure file size is within limits (typically 100MB)
-
-## Future Enhancements
-
-- [ ] Verification portal for students
-- [ ] QR code generation for credentials
-- [ ] Backend database for certificate types
-- [ ] Multi-issuer support with authentication
-- [ ] Credential revocation functionality
-- [ ] Support for scanned PDF images (OCR)
 
 ## License
 
